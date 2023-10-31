@@ -1,0 +1,345 @@
+:root {
+  --main-color: #d81326;
+  --main-bg-color: #d81326;
+  --main-border-radius: 0.4rem;
+  --main-font-color: #000;
+
+}
+
+p {
+  font-size: 0.85rem;
+  line-height: 2;
+}
+
+a {
+  text-decoration: none;
+}
+
+html,
+body {
+  font-family: 'Tajawal', sans-serif;
+  overflow-x: hidden;
+}
+
+*:not(.fa, i) {
+  font-family: 'Tajawal', sans-serif;
+}
+
+.btn.btn-primary {
+  background-color: var(--main-bg-color);
+  border-color: var(--main-bg-color);
+}
+
+.nav-item .nav-link,
+.navbar-light .navbar-nav .nav-link,
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .show>.nav-link {
+  font-size: 18px;
+  color: #000;
+}
+
+.loginbutton {
+  margin-top: -11px;
+  padding-top: 0;
+  position: relative;
+  width: 120px;
+  height: 44px;
+  background-color: #44220A;
+  border-color: #44220A;
+  line-height: 40px;
+  border-radius: 7px;
+  font-weight: bold;
+}
+
+.sliderr {
+  padding-top: 150px;
+  position: relative;
+  z-index: 999999;
+  min-height: 710px;
+}
+
+.navbar-light .navbar-brand {
+  padding-top: 10px;
+}
+
+.leftside h1 {
+  font-weight: bold;
+  color: #44220A;
+}
+
+.leftside button {
+  width: 136px;
+  height: 46px;
+  background-color: #F7ECD9;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-weight: bold;
+  color: #44220A;
+}
+
+.carousel-item {
+  height: 300px;
+}
+
+.carousel-indicators [data-bs-target] {
+  box-sizing: border-box;
+  flex: 0 1 auto;
+  width: 30px;
+  height: 3px;
+  padding: 0;
+  margin-right: 3px;
+  margin-left: 3px;
+  text-indent: -999px;
+  cursor: pointer;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  opacity: .5;
+  transition: opacity .6s ease;
+  background: #CCC;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  z-index: 99;
+}
+
+.carousel-indicators {
+  z-index: 999;
+  bottom: -120px;
+}
+
+.carousel-indicators .active {
+  background-color: #ED9035;
+  opacity: 1;
+}
+
+.myheader .navbar,
+.navbar-brand {
+  padding: 0;
+}
+
+.myheader {
+  padding: 0 200px;
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background: transparent;
+  z-index: 98;
+}
+
+.socialmedia {
+  padding-left: 10px;
+}
+
+.socialmedia i {
+  margin-right: 10px;
+  color: #44220A;
+  font-size: 20px;
+}
+
+.talldiv {
+  width: 250px;
+  height: 710px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ED9035;
+  z-index: 97;
+}
+
+.navbar-expand-lg .navbar-collapse {
+  z-index: 98;
+}
+
+.sliderr img {
+  position: relative;
+  z-index: 98;
+  height: 70%;
+  text-align: center;
+  margin: auto;
+  width: auto;
+  max-width: 100%;
+}
+
+.myheader .navbar,
+.navbar-brand,
+.navbar-light .navbar-toggler {
+  position: relative;
+  z-index: 999;
+}
+
+.carticon {
+  width: 20px;
+  margin-left: 100px;
+  margin-right: 20px;
+}
+
+.categories {
+  width: 100%;
+  display: block;
+  clear: both;
+  background-color: #FDF9F4;
+  padding: 30px 0;
+}
+
+.categories h1 {
+  font-weight: bold;
+}
+
+.imgdiv {
+  text-align: center;
+  font-weight: bold;
+}
+
+.imgdiv h4 {
+  font-weight: bold;
+}
+
+.myheader {
+  z-index: 999999;
+}
+
+.imagepreview {
+  width: 100%;
+  height: 288px;
+}
+
+.imagepreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.catbox {
+  margin: 20px 30px;
+  height: 465px;
+  border: 1px solid #f3ebeb;
+  box-shadow: 0 0 11px #CCC;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #F8F2EA;
+
+}
+
+.catdet {
+  text-align: center;
+  padding: 20px;
+}
+.catdet  p{
+  margin-bottom: 10px;
+}
+
+.catdet h1 {
+  font-size: 22px;
+  color: #43210B
+  ;
+}
+
+.catdet h2 {
+  font-weight: bold;
+  color: #ED9035;
+}
+
+.bestsellers {
+  display: block;
+  padding: 50px 0;
+}
+
+.bestsellers .imagepreview {
+  height: 244px;
+}
+
+.bestsellers .catbox {
+  height: 380px;
+  text-align: left;
+  margin: 0;
+  margin-bottom: 25px;
+}
+
+.bestsellers .catdet {
+  padding: 20px;
+  text-align: left;
+}.bestsellers .catdet p {
+  line-height: 16px;
+  margin-bottom: 5px;
+}
+
+.bestsellers .catdet h1 {
+  line-height: 20px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+@media screen and (max-width: 1180px) {
+  .myheader {
+    padding: 100px;
+  }
+
+  .talldiv {
+    height: 610px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .myheader {
+    padding: 0;
+  }
+
+  .sliderr {
+    min-height: unset !important;
+    margin-bottom: 50px;
+  }
+
+  .talldiv {
+    display: none;
+  }
+
+  #navbarSupportedContent {
+    background: #ED9035;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .carticon {
+    width: 20px;
+    margin-left: 0;
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
+
+  .rights {
+    display: none;
+  }
+
+  .carousel-indicators {
+    bottom: 0;
+  }
+
+  .nav-item .nav-link,
+  .navbar-light .navbar-nav .nav-link,
+  .navbar-light .navbar-nav .nav-link.active,
+  .navbar-light .navbar-nav .show>.nav-link {
+    padding-left: 20px;
+  }
+
+  .imgdiv h4 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .myheader {
+    z-index: 9999999999;
+  }
+}
