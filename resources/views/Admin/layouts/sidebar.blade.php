@@ -54,12 +54,12 @@
                             <p>Testmonials</p>
                         </a>
                     </li>
-                    <li class="{{ Request::segment(2) == 'news' ? 'active' : null }}">
+                    {{-- <li class="{{ Request::segment(2) == 'news' ? 'active' : null }}">
                         <a class="nav-link" href="{{route('news.index')}}">
                             <i class="nc-icon nc-tv-2"></i>
                             <p>News</p>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="{{ Request::segment(2) == 'settings' ? 'active' : null }}">
                         <a class="nav-link" href="{{route('settings')}}">
                             <i class="nc-icon nc-settings-gear-64"></i>
