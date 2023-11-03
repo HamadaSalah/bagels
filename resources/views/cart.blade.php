@@ -4,10 +4,13 @@
 
 
 <div class="site-section">
+
     <div class="container">
+      @if (count($carts) > 0)
       <div class="row mb-5">
         <form class="col-md-12" method="post">
           <div class="site-blocks-table">
+
             <table class="table table-bordered">
               <thead>
                 <tr>
@@ -93,33 +96,39 @@
             </div>
           </div>
         </div>
+      </div>  
+      <div class="modal fade" style="z-index: 9999999999999!important" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Checkout Now</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="{{Route('checkout')}}">
+                <input type="hidden" value="{{$order}}" name="details">
+                  @csrf            
+                  <div class="form-group">
+                    <input type="address" placeholder="Write Your address ..." name="address" class="form-control mb-3" required>
+                </div>
+                <div class="form-group">
+                    <input type="street" placeholder="Write Your street ..." name="street" class="form-control mb-3" required>
+                </div>
+                  <button type="submit" class="btn btn-success">Submit</button>
+              </form>
+          </div>
+           </div>
+        </div>
       </div>
+              
+      @else 
+      <center class="mt-5 mb-5"> No Items</center>
+      @endif
+      
+
     </div>
   </div>
   <!-- Modal -->
-<div class="modal fade" style="z-index: 9999999999999!important" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Checkout Now</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form action="{{Route('checkout')}}">
-          <input type="hidden" value="{{$order}}" name="details">
-            @csrf            
-            <div class="form-group">
-              <input type="address" placeholder="Write Your address ..." name="address" class="form-control mb-3" required>
-          </div>
-          <div class="form-group">
-              <input type="street" placeholder="Write Your street ..." name="street" class="form-control mb-3" required>
-          </div>
-            <button type="submit" class="btn btn-success">Submit</button>
-        </form>
-    </div>
-     </div>
-  </div>
-</div>
 
    
 @endsection

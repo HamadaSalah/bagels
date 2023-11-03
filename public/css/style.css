@@ -665,7 +665,9 @@ a:hover {
   transform: scale(1.2); 
   cursor: pointer;
 }
- 
+.table.table-bordered  {
+  margin-top: 100px;
+}
 
 
 
@@ -732,12 +734,28 @@ a:hover {
   .myheader {
     padding: 0;
   }
-
+  .imgdiv img {
+    width: 150px!important;
+  }
   .sliderr {
     min-height: unset !important;
     margin-bottom: 50px;
+    padding-top: 30px;
   }
-
+  .site-blocks-table {
+    overflow: scroll;
+  }
+  .table.table-bordered {
+    width: 800px;
+    margin-top: 20px;
+  }
+  .testmon .carousel-item {
+    height: 220px;
+  }
+  .footer {
+    font-weight: bold;
+    text-align: center;
+  }
   .talldiv {
     display: none;
   }
