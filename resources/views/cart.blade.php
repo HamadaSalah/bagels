@@ -109,10 +109,10 @@
                 <input type="hidden" value="{{$order}}" name="details">
                   @csrf            
                   <div class="form-group">
-                    <input type="address" placeholder="Write Your address ..." name="address" class="form-control mb-3" required>
+                    <input type="address" placeholder="Write Your address ..." value="{{auth()?->user()?->address}}" name="address" class="form-control mb-3" required>
                 </div>
                 <div class="form-group">
-                    <input type="street" placeholder="Write Your street ..." name="street" class="form-control mb-3" required>
+                    <input type="street" placeholder="Write Your street ..." value="{{auth()?->user()?->street}}" name="street" class="form-control mb-3" required>
                 </div>
                   <button type="submit" class="btn btn-success">Submit</button>
               </form>

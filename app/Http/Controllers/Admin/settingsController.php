@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class settingsController extends Controller
@@ -86,5 +87,11 @@ class settingsController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function users()
+    {
+        return view('Admin.settings.index',[
+            'users' => User::all()
+        ]);
     }
 }

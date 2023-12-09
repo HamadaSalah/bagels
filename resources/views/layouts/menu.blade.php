@@ -36,8 +36,16 @@
           </li>
           <li class="nav-item">
             @if (auth('web')->user()?->id != NULL)
-            <a class="nav-link active" aria-current="page" href="#"><i class="fa fa-user"></i> 
-              {{Str::substr(auth()->user()->name, 0, 10) }}..</a>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                {{Str::substr(auth()->user()->name, 0, 10) }}..
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="{{Route('orders')}}">My Orders</a></li>
+              </ul>
+            </div>
+            {{-- <a class="nav-link active" aria-current="page" href="#"><i class="fa fa-user"></i> 
+              {{Str::substr(auth()->user()->name, 0, 10) }}..</a> --}}
 
             @else
             <a class="nav-link active" aria-current="page" href="{{Route('login')}}"><button class="btn btn-success loginbutton">Log in</button></a>

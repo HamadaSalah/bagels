@@ -12,10 +12,10 @@
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="{{ Request::segment(2) == 'about' ? 'active' : null }}">
-                        <a class="nav-link" href="{{route('about.index')}}">
+                    <li class="{{ Request::segment(2) == 'users' ? 'active' : null }}">
+                        <a class="nav-link" href="{{route('users.index')}}">
                             <i class="nc-icon nc-badge"></i>
-                            <p>About</p>
+                            <p>users</p>
                         </a>
                     </li>
                     <li class="{{ Request::segment(2) == 'slider' ? 'active' : null }}">
@@ -60,12 +60,12 @@
                             <p>News</p>
                         </a>
                     </li> --}}
-                    <li class="{{ Request::segment(2) == 'settings' ? 'active' : null }}">
+                    {{-- <li class="{{ Request::segment(2) == 'settings' ? 'active' : null }}">
                         <a class="nav-link" href="{{route('settings')}}">
                             <i class="nc-icon nc-settings-gear-64"></i>
                             <p>Settings</p>
                         </a>
-                    </li>
+                    </li> --}}
 
                 </ul>
               

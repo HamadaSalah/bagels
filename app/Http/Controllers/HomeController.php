@@ -10,6 +10,7 @@ use App\Models\News;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Slider;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -131,6 +132,11 @@ class HomeController extends Controller
     public function checkout(Request $request) {
 
         $requestData = $request->except('_token');
+        $user = User::findOrFail(auth()->user()->id);
+        $user->update([
+            'address' => $request->address,
+            'street' => $request->street,
+        ]);
 
         Order::create([
             'user_id' => auth()->user()->id,
@@ -146,7 +152,8 @@ class HomeController extends Controller
             $data->delete();
             
         }
-        return redirect()->route('home');
+        return $this->createPayment();
+        // return redirect()->route('home');
 
     }
     public function shop_single($id) {
@@ -164,5 +171,61 @@ class HomeController extends Controller
     public function categories() {
         $cats = Category::with('products')->get();
         return view('categories', compact('cats'));
+    }
+    public function createPayment()
+    {
+ 
+        $accessToken = 'EAAAEOQCWcxAvaoitr81nE7H3RXsSf3k0Wyk2Rs0l9zRPQS1ISLtoHqx76e1A1ac';
+        $locationId = 'L1XW041K4ZH5W';
+        $uniqueKey = '4290335e-6ee0-429a-94b5-69689d23eaf7';
+        
+        $data = [
+            "idempotency_key" => $uniqueKey,
+            "quick_pay" => [
+                "name" => "Auto Detailing",
+                "price_money" => [
+                    "amount" => 12500,
+                    "currency" => "USD"
+                ],
+                "location_id" => $locationId,
+                "redirect_url" => 'https://bagels.asrixx.com/'
+            ]
+        ];
+        
+        $headers = [
+            'Square-Version: 2023-11-15',
+            'Authorization: Bearer ' . $accessToken,
+            'Content-Type: application/json',
+        ];
+        
+        $ch = curl_init();
+        
+        curl_setopt($ch, CURLOPT_URL, 'https://connect.squareupsandbox.com/v2/online-checkout/payment-links');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        
+        $response = curl_exec($ch);
+        
+        if (curl_errno($ch)) {
+            echo 'Error: ' . curl_error($ch);
+        }
+        
+        curl_close($ch);
+        if($response) {
+            // dd($response);
+            $responseData = json_decode($response, true);
+            // Output the response
+            return redirect()->to($responseData['payment_link']['long_url']);
+        }
+    
+    }
+    //
+    public function myOrders() {
+
+        $orders = Order::where('user_id', auth()->user()->id)->get();
+        
+        return view('orders', compact('orders'));
     }
 }

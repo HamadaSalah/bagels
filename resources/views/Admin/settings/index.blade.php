@@ -1,4 +1,4 @@
-
+{{-- 
 @extends('Admin.master')
 @section('content')
 <h2 class="collectioName">Edit Settings</h2>
@@ -33,4 +33,40 @@
 @endpush
 
 
+ --}}
 
+ @extends('Admin.master')
+@section('content')
+<h2 style="padding-bottom: 35px;float: left;margin-top: 0">All Users</h2>
+<div class="clearfix"></div>
+<div class="clear"></div>
+    @if ($users->count() > 0)
+    <div class="table-responsive">
+        <table class="table user-table no-wrap" id="myDTable">
+            <thead>
+                <tr>
+                    <th class="border-top-0">#</th>
+                    <th class="border-top-0">name</th>
+                    <th class="border-top-0">Email</th>
+                    <th class="border-top-0">Registeration Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($users as $user)
+                <tr>
+                    <td>{{$user->id}}</td>
+                    <td>{{$user->name}}</td>
+                    <td>{{$user->email}}</td>
+                    <td>{{$user->created_at}}</td>
+
+                </tr>
+
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    @else
+        <div class="text-center">No Data Available</div> 
+    @endif
+@endsection

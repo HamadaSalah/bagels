@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SquarePaymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -39,7 +40,11 @@ route::get('cart/', 'HomeController@cart')->name('cart');
 route::get('shop-single/{id}', 'HomeController@shop_single')->name('shop_single');
 Route::get('/checkout', "HomeController@checkout")->name('checkout')->middleware('auth:web');
 
+Route::get('/create-payment', [SquarePaymentController::class, 'createPayment']);
+Route::post('/process-payment', [SquarePaymentController::class, 'processPayment']);
 
+Route::post('/webhook-handler', 'WebhookController@handle');
+Route::get('/my-orders', 'HomeController@myOrders')->name('orders');
 
 
 
@@ -62,4 +67,5 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'name' => 'admin.', '
     Route::get('order', 'AboutController@order')->name('order');
     Route::get('settings', 'settingsController@index')->name('settings');
     Route::post('settings', 'settingsController@store')->name('settings.store');
+    Route::get('users', 'settingsController@users')->name('users.index');
 });
