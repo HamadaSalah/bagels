@@ -125,12 +125,12 @@
               </form>
               <div id="payment-status-container"></div> 
               <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-              <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+              <script src="https://web.squarecdn.com/v1/square.js"></script>
               <script src="https://cdn.jsdelivr.net/npm/card-validator/dist/card-validator.min.js"></script>
               
               <script>
-                  const appId = 'sandbox-sq0idb-cSONHMAzn3W4P44ptyzG3w';
-                  const locationId = 'L32P4PF8YS9X7';
+                  const appId = 'sq0idp--mmVbmLxuiLZFcTwb-F2YA';
+                  const locationId = 'LYQ78M8HRC23X';
               
                   async function initializeCard(payments) {
                       const card = await payments.card();
