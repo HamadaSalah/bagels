@@ -262,7 +262,7 @@ class HomeController extends Controller
             $payments_api = $square_client->getPaymentsApi();
             $money = new Money();
             $money->setAmount($grandTotal);
-            $money->setCurrency("EGP");
+            $money->setCurrency("USD");
             $orderId = uniqid();
 
             $sourceIdToken = $data['sourceId']['token'];
