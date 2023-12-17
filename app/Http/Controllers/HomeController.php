@@ -13,6 +13,10 @@ use App\Models\Slider;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Square\Environment;
+use Square\Models\CreatePaymentRequest;
+use Square\Models\Money;
+use Square\SquareClient;
 
 class HomeController extends Controller
 {
@@ -131,18 +135,19 @@ class HomeController extends Controller
     }
     public function checkout(Request $request) {
 
+        
         $requestData = $request->except('_token');
         $user = User::findOrFail(auth()->user()->id);
-        $user->update([
-            'address' => $request->address,
-            'street' => $request->street,
-        ]);
+        // $user->update([
+        //     'address' => $request->address,
+        //     'street' => $request->street,
+        // ]);
 
         Order::create([
             'user_id' => auth()->user()->id,
             'details' => $request->details,
-            'address' => $request->address,
-            'street' => $request->street,
+            'address' => $user->address ?? "--",
+            'street' => $user->street ?? "--",
         ]);
 
         $datas = Cart::where('session_id', auth()->user()->id)->get();
@@ -152,8 +157,7 @@ class HomeController extends Controller
             $data->delete();
             
         }
-        return $this->createPayment();
-        // return redirect()->route('home');
+        return redirect()->route('home');
 
     }
     public function shop_single($id) {
@@ -175,8 +179,8 @@ class HomeController extends Controller
     public function createPayment()
     {
  
-        $accessToken = 'EAAAEOQCWcxAvaoitr81nE7H3RXsSf3k0Wyk2Rs0l9zRPQS1ISLtoHqx76e1A1ac';
-        $locationId = 'L1XW041K4ZH5W';
+        $accessToken = 'EAAAEUJzq0koyO_QQQkwsA3n_u1O9pOxHC8nv_-aacw-R9mP859_cRyZOGLptlFe';
+        $locationId = 'LYQ78M8HRC23X';
         $uniqueKey = '4290335e-6ee0-429a-94b5-69689d23eaf7';
         
         $data = [
@@ -227,5 +231,55 @@ class HomeController extends Controller
         $orders = Order::where('user_id', auth()->user()->id)->get();
         
         return view('orders', compact('orders'));
+    }
+
+
+
+    private function formatJson($data)
+    {
+        if (is_array($data) || is_object($data)) {
+            return json_encode($data, JSON_PRETTY_PRINT);
+        } else {
+            return $data;
+        }
+    }
+
+    public function paymentCard(Request $request)
+    {
+        try {
+            $data = $request->all();
+            if (!isset($data['amount']) || !isset($data['sourceId']['token'])) {
+                return response()->json(['error' => 'Invalid payment data provided.'], 400);
+            }
+
+            $square_client = new SquareClient([
+                'accessToken' => 'EAAAEBaBLEZJxHQVYtZhuwN4jvi3a0meJpBkccotpiERnbU9ZkMt2o7wZqg46ZjL',
+                'environment' => Environment::SANDBOX,
+            ]);
+
+            $grandTotal = (int) $data['amount'];
+
+            $payments_api = $square_client->getPaymentsApi();
+            $money = new Money();
+            $money->setAmount($grandTotal);
+            $money->setCurrency("EGP");
+            $orderId = uniqid();
+
+            $sourceIdToken = $data['sourceId']['token'];
+            $create_payment_request = new CreatePaymentRequest($sourceIdToken, $orderId);
+            $create_payment_request->setAmountMoney($money);
+
+            $response = $payments_api->createPayment($create_payment_request);
+
+            if ($response->isSuccess()) {
+                return response()->json($response->getResult());
+             } else {
+                \Log::error('Square API Errors: ' . json_encode($response->getErrors(), JSON_PRETTY_PRINT));
+                return response()->json(['error' => 'An error occurred while processing the payment.'], 500);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Unexpected error: ' . $e->getMessage());
+            return response()->json(['error' => 'An error occurred while processing the payment.'], 500);
+        }
     }
 }

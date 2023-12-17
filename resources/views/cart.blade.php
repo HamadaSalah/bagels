@@ -44,7 +44,8 @@
                       @endif
                       <td>
                     </form>
-                        <form action="{{route('cartMin', $cart->product->id)}}" method="POST" style="display: inline;float: left;">
+                        <form action="{{route('cartMin', $cart->product->id)}}" method="POST" style="display: inline;float: left;" 
+                          >
                             @csrf
                             <button class="btn btn-outline-primary" type="submit">&minus;</button>
                         </form>
@@ -105,16 +106,152 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form action="{{Route('checkout')}}">
+              <form action="{{Route('checkout')}}" id="MYFFORMM">
                 <input type="hidden" value="{{$order}}" name="details">
                   @csrf            
-                  <div class="form-group">
+                  {{-- <div class="form-group">
                     <input type="address" placeholder="Write Your address ..." value="{{auth()?->user()?->address}}" name="address" class="form-control mb-3" required>
                 </div>
                 <div class="form-group">
                     <input type="street" placeholder="Write Your street ..." value="{{auth()?->user()?->street}}" name="street" class="form-control mb-3" required>
-                </div>
-                  <button type="submit" class="btn btn-success">Submit</button>
+                </div> --}}
+                <form id="payment-form" >@csrf
+                  <input type="hidden" class="form-control" name="amount" id="price-input"
+                      style="width: 100%; height: 40px; border: 2px solid #ccc; border-radius: 4px; padding: 8px;"
+                      value="{{ session('price', '') }}">
+                  <div id="card-container"></div>
+                  <div id="errorBody" style="color: red;margin: 3px"></div>
+                  <button class="cardBtn btn btn-success" id="card-button" type="button">Pay Now</button>
+              </form>
+              <div id="payment-status-container"></div> 
+              <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+              <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+              <script src="https://cdn.jsdelivr.net/npm/card-validator/dist/card-validator.min.js"></script>
+              
+              <script>
+                  const appId = 'sandbox-sq0idb-cSONHMAzn3W4P44ptyzG3w';
+                  const locationId = 'L32P4PF8YS9X7';
+              
+                  async function initializeCard(payments) {
+                      const card = await payments.card();
+                      await card.attach('#card-container');
+              
+                      return card;
+                  }
+              
+                  async function createPayment(token, amount) {
+                      const body = JSON.stringify({
+                          locationId,
+                          sourceId: token,
+                          amount: 50,
+                      });
+              
+                      const paymentResponse = await fetch('/api/payment', {
+                          method: 'POST',
+                          headers: {
+                              'Content-Type': 'application/json',
+                          },
+                          body,
+                      });
+              
+                      if (paymentResponse.ok) {
+                        console.log(paymentResponse.ok);
+                        document.getElementById("MYFFORMM").submit();
+                          
+                      }
+                      else {
+                        const errorBody = await paymentResponse.text();
+
+                        document.getElementById("errorBody").innerHTML = "Failed When Transaction or invalid data!";
+
+                      }
+              
+
+                  }
+              
+                  async function tokenize(paymentMethod) {
+                      const tokenResult = await paymentMethod.tokenize();
+                      if (tokenResult.status === 'OK') {
+                          return tokenResult.token;
+                      } else {
+                          console.log(tokenResult.errors);
+                          // throw new Error(errorMessage);
+                      }
+                  }
+              
+                  function displayPaymentResults(status) {
+                      const statusContainer = document.getElementById('payment-status-container');
+                      if (status === 'SUCCESS') {
+                          statusContainer.classList.remove('is-failure');
+                          statusContainer.classList.add('is-success');
+                      } else {
+                          statusContainer.classList.remove('is-success');
+                          statusContainer.classList.add('is-failure');
+                      }
+              
+                      statusContainer.style.visibility = 'visible';
+                  }
+              
+                  document.addEventListener('DOMContentLoaded', async function () {
+                      if (!window.Square) {
+                          throw new Error('Square.js failed to load properly');
+                      }
+              
+                      let payments;
+                      try {
+                          payments = window.Square.payments(appId, locationId);
+                      } catch {
+                          const statusContainer = document.getElementById('payment-status-container');
+                          statusContainer.className = 'missing-credentials';
+                          statusContainer.style.visibility = 'visible';
+                          return;
+                      }
+              
+                      let card;
+                      try {
+                          card = await initializeCard(payments);
+                      } catch (e) {
+                          console.error('Initializing Card failed', e);
+                          return;
+                      }
+              
+                      async function handlePaymentMethodSubmission(event, paymentMethod) {
+                          event.preventDefault();
+              
+                          try {
+                              const cardNonce = await paymentMethod.tokenize();
+                              if (cardNonce) {
+                                  cardButton.disabled = true;
+              
+                                  const amountValue = 50;
+                                  if (isNaN(amountValue) || amountValue <= 0) {
+                                      throw new Error('Invalid or missing amount.');
+                                  }
+              
+                                  const paymentResults = await createPayment(cardNonce, amountValue);
+              
+                                  displayPaymentResults('SUCCESS');
+                                  console.debug('Payment Success', paymentResults);
+                              } else {
+                                  displayPaymentResults('FAILURE');
+                                  console.error('Invalid card nonce');
+                              }
+                          } catch (e) {
+                              cardButton.disabled = false;
+                              displayPaymentResults('FAILURE');
+                              console.error(e.message);
+                          }
+                      }
+              
+                      const cardButton = document.getElementById('card-button');
+                      cardButton.addEventListener('click', async function (event) {
+                          await handlePaymentMethodSubmission(event, card);
+                      });
+                  });
+              
+              </script>
+              
+                  {{-- <button type="submit" class="btn btn-success">Submit</button> --}}
               </form>
           </div>
            </div>

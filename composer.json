@@ -13,7 +13,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
         "square/connect": "^3.20200528",
-        "square/square": "33.0.0.20231115"
+        "square/square": "33.1.0.20231213"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
