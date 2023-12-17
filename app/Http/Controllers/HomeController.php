@@ -254,7 +254,7 @@ class HomeController extends Controller
 
             $square_client = new SquareClient([
                 'accessToken' => 'EAAAEBaBLEZJxHQVYtZhuwN4jvi3a0meJpBkccotpiERnbU9ZkMt2o7wZqg46ZjL',
-                'environment' => Environment::SANDBOX,
+                'environment' => Environment::PRODUCTION,
             ]);
 
             $grandTotal = (int) $data['amount'];
