@@ -668,7 +668,11 @@ a:hover {
 .table.table-bordered  {
   margin-top: 100px;
 }
-
+.searcharea {
+  width: 70%;
+  text-align: center;
+  margin: auto;
+}
 
 
 

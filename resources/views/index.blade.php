@@ -54,8 +54,9 @@
         @foreach ($categories as $category)
           <div class="col">
             <div class="imgdiv">
+              <a href="{{Route('category', $category->id)}}">
               <img src="{{asset('images/'.$category->img)}}" alt="" style="width: 70%;">
-              <h4>{{$category->name}}</h4>
+              <h4>{{$category->name}}</h4></a>
             </div>
           </div>            
         @endforeach
@@ -93,12 +94,20 @@
                 <a href="{{Route('product', $pop->id)}}"><h1>{{$pop->name}}</h1></a>
                   <a href="{{Route('product', $pop->id)}}"><p>{{substr($pop->desc, 0, 70)}} </p></a>
                 <a href="{{Route('product', $pop->id)}}"><h2>{{$pop->price}}$</h2></a>
-                  <form action="{{route('AddToCart', $pop->id)}}" method="POST">
+                @if ($pop->count > 0)
+                                      <form action="{{route('AddToCart', $pop->id)}}" method="POST">
                     @csrf
                     <button class="btn btn-primary addtocart">
                        <i class="fa-solid fa-circle-plus plusicon"></i> 
                     </button>
                     </form>
+
+                @else
+                <button class="btn btn-primary addtocart">
+                  <span class="plusicon" style="font-size: 14px;font-weight: bold;color: rgb(152, 0, 0)">Out Of Stock</span>
+               </button>
+
+                 @endif
       
               </div>
             </div>

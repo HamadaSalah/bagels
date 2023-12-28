@@ -37,6 +37,11 @@
         <label for="name">Price</label>
         <input type="name" class="form-control" id="name" name="price"  placeholder="Price ...." required value="{{$product->price}}">
     </div>
+    <div class="form-group">
+        <label for="count">Count</label>
+        <input type="number" class="form-control" id="count" name="count"  placeholder="Count ...." required value="{{$product->count}}">
+    </div>
+
     {{-- <div class="form-group">
         <label for="name">Discount</label>
         <input type="name" class="form-control" id="name" name="discount"  placeholder="Discount ....">

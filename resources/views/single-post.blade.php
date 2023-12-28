@@ -45,10 +45,19 @@
             
   
             <hr>
+
+            @if ($product->count > 0)
             <form action="{{route('AddToCart', $product->id)}}" method="POST">
               @csrf
               <button class="btn btn-primary addtocart"><i class="me-1 fa fa-shopping-basket"></i> Add To Cart</button>
               </form>
+            @else
+            <button class="btn btn-danger addtocart">
+              Out Of Stock
+            </button>
+            @endif
+
+            
 
            </div>
         </main>

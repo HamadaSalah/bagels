@@ -15,7 +15,7 @@
                     <th class="border-top-0">Name</th>
                     <th class="border-top-0">Category</th>
                     <th class="border-top-0">Price</th>
-                    <th class="border-top-0">Descount</th>
+                    <th class="border-top-0">count</th>
                     <th class="border-top-0">img</th>
                     <th class="border-top-0">Action</th>
                 </tr>
@@ -27,7 +27,7 @@
                     <td>{{$product->name}}</td>
                     <td>{{$product->category?->name}}</td>
                     <td>{{$product->price}}</td>
-                    <td>{{$product->discount}}</td>
+                    <td>{{$product->count}}</td>
                     <td>
                         <a data-fancybox="gallery" href="{{asset('images/'.$product->img)}}"> <img src="{{asset('images/'.$product->img)}}" style="width: 100px;height: 100px;" class="img-thumbnail" alt=""></a>
                     </td>

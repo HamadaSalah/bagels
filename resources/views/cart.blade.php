@@ -87,13 +87,19 @@
                   {{-- <h3 class="text-black h4 text-uppercase">Cart Totals = <strong class="text-black">{{$total}} (SOS)</strong> </h3> --}}
                 </div>
               </div>
-  
-              <div class="row">
-                <div class="col-md-12">
-                  <button class="btn btn-primary btn-lg btn-block mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal" >Proceed To
-                    Checkout</button>
+              @guest
+              <button class="btn btn-suceess">
+                <a class="nav-link active" aria-current="page" href="https://bagels.test/login"><button class="btn btn-success loginbutton">Log in</button></a>
+              </button>
+                @else
+                <div class="row">
+                  <div class="col-md-12">
+                    <button class="btn btn-primary btn-lg btn-block mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal" >Proceed To
+                      Checkout</button>
+                  </div>
                 </div>
-              </div>
+  
+              @endguest
             </div>
           </div>
         </div>

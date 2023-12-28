@@ -30,12 +30,19 @@
                                     <a href="{{Route('product', $mycat->id)}}"><h1>{{$mycat->name}}</h1></a>
                                         <a href="{{Route('product', $mycat->id)}}"><p>{{$mycat->desc}} </p></a>
                                             <a href="{{Route('product', $mycat->id)}}"><h2>{{$mycat->price}}$</h2></a>
+                                            @if ($mycat->count > 0)
                                             <form action="{{route('AddToCart', $mycat->id)}}" method="POST">
                                                 @csrf
                                                 <button class="btn btn-primary addtocart">
                                                    <i class="fa-solid fa-circle-plus plusicon"></i> 
                                                 </button>
                                                 </form>
+
+                                             @else
+                                            <button class="btn btn-primary addtocart">
+                                                <span class="plusicon" style="font-size: 14px;font-weight: bold;color: rgb(152, 0, 0)">Out Of Stock</span>
+                                            </button>
+                                            @endif
                                                             </div>
                             </div>
                         </div>                          

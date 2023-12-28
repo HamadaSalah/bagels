@@ -46,19 +46,23 @@ class ProductController extends Controller
             'price' => 'required',
             'category_id' => 'required',
             'img' => 'required',
+            'count' => 'required',
         ]);
+
         $requestData = $request->except('_token');
+
         if ($request->hasFile('img')) {
             $file = $request->file('img');
             $ext = $file->getClientOriginalExtension();
             $filename = 'sliderIMG'.'_'.time().'.'.$ext;
-            $destinationPath = public_path().'/assets/img' ;
-            $storagePath = Storage::disk('public_uploads')->put('/images', $file) ;
+            $destinationPath = public_path().'/assets/img';
+            $storagePath = Storage::disk('public_uploads')->put('/images', $file);
             $storageName = basename($storagePath);
             $requestData['img'] = $storageName;
         }
 
         Product::create($requestData);
+
         return redirect()->route('product.index')->with('success', 'Product Addedd Successfully');
     }
 

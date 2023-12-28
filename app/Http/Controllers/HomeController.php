@@ -172,10 +172,25 @@ class HomeController extends Controller
         $products = Product::all();
         return view('products', compact('products'));
     }
+    public function menuSearch(Request $request) {
+        if(isset($request->search) && $request->search != NULL ) {
+            $products = Product::where('name', 'like', '%' . $request->search . '%')->get();
+            return view('products', compact('products'));
+        }
+    }
+
     public function categories() {
         $cats = Category::with('products')->get();
         return view('categories', compact('cats'));
     }
+    public function category($id) {
+
+        $products = Product::where('category_id', $id)->get();
+        
+        return view('products', compact('products'));
+
+    }
+
     public function createPayment()
     {
  
