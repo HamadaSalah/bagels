@@ -305,7 +305,7 @@ body {
 }
 
 .bestsellers .catbox {
-  height: 380px;
+  height: unset;
   text-align: left;
   margin: 0;
   margin-bottom: 25px;
@@ -314,6 +314,7 @@ body {
 .bestsellers .catdet {
   padding: 20px;
   text-align: left;
+  padding-bottom: 0px;
 }
 
 .bestsellers .catdet p {
