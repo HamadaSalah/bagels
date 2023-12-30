@@ -514,7 +514,10 @@ body {
   width: calc(100% - 50px);
   padding-left: 20px;
 }
-
+.img-of-BURR {
+  display: block;
+  width: 150PX;
+}
 @media (prefers-reduced-motion: reduce) {
   .btn {
     -webkit-transition: none;

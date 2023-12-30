@@ -38,7 +38,7 @@ class HomeController extends Controller
     public function index()
     {
         $news = News::latest()->take(3)->get();
-        $categories = Category::all();
+        $categories = Category::with('products')->get();
         $sliders = Slider::all();
         $pop_products = Product::where('type', 'popular')->take(6)->get();
         $new_products = Product::where('type', 'new')->take(6)->get();
@@ -169,8 +169,8 @@ class HomeController extends Controller
         return view('single-post', compact('product'));
     }
     public function menu() {
-        $products = Product::all();
-        return view('products', compact('products'));
+        $categories = Category::with('products')->get();
+        return view('products', compact('categories'));
     }
     public function menuSearch(Request $request) {
         if(isset($request->search) && $request->search != NULL ) {
