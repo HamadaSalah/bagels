@@ -337,7 +337,7 @@ body {
 .plusicon {
   position: absolute;
   right: 20px;
-  bottom: 52px;
+  bottom: 32px;
   font-size: 30px;
   color: #44220A;
 }
@@ -423,7 +423,7 @@ body {
 }
 
 .bestsellerss .catbox {
-  height: 380px;
+  height: unset;
   text-align: left;
   margin: 0;
   margin-bottom: 25px;
@@ -432,6 +432,7 @@ body {
 .bestsellerss .catdet {
   padding: 20px;
   text-align: left;
+  padding-bottom: 0;
 }
 
 .bestsellerss .catdet p {
