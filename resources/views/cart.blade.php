@@ -89,7 +89,7 @@
               </div>
               @guest
               <button class="btn btn-suceess">
-                <a class="nav-link active" aria-current="page" href="https://bagels.test/login"><button class="btn btn-success loginbutton">Log in</button></a>
+                <a class="nav-link active" aria-current="page" href="{{ Route('login') }}"><button class="btn btn-success loginbutton">Log in</button></a>
               </button>
                 @else
                 <div class="row">
