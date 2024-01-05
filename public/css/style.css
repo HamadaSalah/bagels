@@ -817,4 +817,32 @@ a:hover {
     font-size: 12px;
     right: unset;
   }
+  .img-of-BURR {
+    display: block;
+    width: 60PX;
+  }
+  .nav-item .nav-link, 
+  .navbar-light .navbar-nav .nav-link, 
+  .navbar-light .navbar-nav .nav-link.active, 
+  .navbar-light .navbar-nav .show>.nav-link {
+    padding: 3px;
+  }
+  #myTab {
+    width: 100%;
+    max-height: 400px; /* Adjust as needed for your design */
+    overflow-y: scroll;
+    position: relative;
+}
+
+.nav-link {
+    /* Adjustments for better mobile usability */
+    padding: 10px 15px; /* Larger clickable area */
+    font-size: 16px; /* Larger text for readability */
+}
+
+.img-of-BURR {
+    width: 100%; /* Ensure images scale within the buttons */
+    height: auto; /* Maintain aspect ratio */
+}
+
 }
