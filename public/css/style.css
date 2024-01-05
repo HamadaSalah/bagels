@@ -827,29 +827,28 @@ a:hover {
   .navbar-light .navbar-nav .show>.nav-link {
     padding: 3px;
   }
-  #myTab {
+  /* #myTab {
     width: 100%;
-    overflow-x: auto; /* Enable horizontal scrolling */
-    overflow-y: hidden; /* Prevent vertical scrolling */
-    white-space: nowrap; /* Keep all tabs in a single line */
+    overflow-x: auto;  
+    overflow-y: hidden;  
+    white-space: nowrap; 
     position: relative;
   }
 
   .nav-item {
-      display: inline-block; /* Display tabs in a line */
-      margin-right: 5px; /* Add some space between tabs */
+      display: inline-block;  
+      margin-right: 5px; 
   }
 
   .nav-link {
-      /* Adjustments for better mobile usability */
-      padding: 10px 15px; /* Larger clickable area */
-      font-size: 16px; /* Larger text for readability */
+       padding: 10px 15px;  
+      font-size: 16px;  
   }
 
   .img-of-BURR {
-      width: auto; /* Adjust image width as needed */
-      height: auto; /* Maintain aspect ratio */
-      vertical-align: middle; /* Align images properly within the button */
+      width: auto; 
+      height: auto; 
+      vertical-align: middle; 
   }
-
+ */
 }
