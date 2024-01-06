@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="pageheaders">
-    <h1>Categories</h1>
+    <h1>LOGIN</h1>
 </div>
 
 <div class="container">

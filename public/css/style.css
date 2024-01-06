@@ -178,8 +178,12 @@ body {
   width: 20px;
   margin-left: 100px;
   margin-right: 20px;
+  filter: sepia(65) hue-rotate(64deg) saturate(66%) brightness(15%);
 }
-
+.btn-check:active+.btn-success, .btn-check:checked+.btn-success, .btn-success.active, .btn-success:active, .show>.btn-success.dropdown-toggle {
+  background-color: transparent;
+  border-color: transparent;
+}
 .categories {
   width: 100%;
   display: block;
