@@ -154,6 +154,7 @@
                       var cardNumber = $('#cardNumber').val();
                       var expDate = $('#expDate').val();
                       var cvv = $('#cvv').val();
+                      var amount = $('#price-input').val();
 
                       let route = "{{ route('paymentCheckout') }}";
                       let token = "{{ csrf_token()}}";
@@ -166,7 +167,8 @@
                               _token:token,
                               cardNumber:cardNumber,
                               expDate:expDate,
-                              cvv:cvv
+                              cvv:cvv,
+                              amount:amount
                           },
                           success: function(response) {
 

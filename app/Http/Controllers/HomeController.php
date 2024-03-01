@@ -352,7 +352,7 @@ class HomeController extends Controller
             'appkey' => 'UQgQl7XG8FnWQcV5Ep1TWMLpAgSqjlhK',
             'epi' => '2501103429',
             'txn_type' => 'sale',
-            'amount' => 0.2,
+            'amount' => $request->amount ?? 0.2,
             'cardnumber' => $request->cardNumber,
             'expirydate' => $request->expiryDate,
             'cvv' => $request->cvv,
