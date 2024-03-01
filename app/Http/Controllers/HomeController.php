@@ -44,13 +44,21 @@ class HomeController extends Controller
         $new_products = Product::where('type', 'new')->take(6)->get();
         return view('index', compact('sliders', 'pop_products', 'new_products', 'categories', 'news'));
     }
+
+
     public function about() {
         $about = About::first();
         return view('about', compact('about'));
     }
+
+    /**
+     * 
+     */
     public function contact() {
         return view('contact');
     }
+
+
     public function shop(Request $request) {
         if ($request->get('from') != null) {
             $from = number_format((float)$request->get('from') ,2, '.', '');
@@ -67,6 +75,8 @@ class HomeController extends Controller
         $cats = Category::all();
         return view('shop', compact('products', 'cats'));
     }
+
+
     public function SendMessage(Request $request) {
         $vlidation = $request->validate([
             'f_name' => 'required',
@@ -97,11 +107,15 @@ class HomeController extends Controller
         }
         return redirect()->back();
     }
+
+
     public function deleteCart($id) {
         $cart = Cart::findOrFail($id);
         $cart->delete();
         return redirect()->back();
     }
+
+
     public function cart() {
         if(isset(auth()->user()->id)) {
             $carts = Cart::where('session_id', auth()->user()->id)->get();
@@ -112,6 +126,8 @@ class HomeController extends Controller
 
         return view('cart', compact('carts'));
     }
+
+
     public function cartPlus($id) {
         $cart = Cart::where('product_id',$id)->first();
         $newcount = $cart->count +1 ;
@@ -120,6 +136,8 @@ class HomeController extends Controller
         ]);
         return redirect()->back();
     }
+
+
     public function cartMin($id) {
         $cart = Cart::where('product_id',$id)->first();
         if ($cart->count == 1) {
@@ -133,6 +151,8 @@ class HomeController extends Controller
         
         return redirect()->back();
     }
+
+
     public function checkout(Request $request) {
 
         
@@ -160,18 +180,26 @@ class HomeController extends Controller
         return redirect()->route('home');
 
     }
+
+
     public function shop_single($id) {
         $product = Product::findOrFail($id);
         return view('shop_single', compact('product'));
     }
+
+
     public function post($id) {
         $product = Product::findOrFail($id);
         return view('single-post', compact('product'));
     }
+
+
     public function menu() {
         $categories = Category::with('products')->get();
         return view('products', compact('categories'));
     }
+
+
     public function menuSearch(Request $request) {
         if(isset($request->search) && $request->search != NULL ) {
             $products = Product::where('name', 'like', '%' . $request->search . '%')->get();
@@ -183,6 +211,8 @@ class HomeController extends Controller
         $cats = Category::with('products')->get();
         return view('categories', compact('cats'));
     }
+
+
     public function category($id) {
 
         $products = Product::where('category_id', $id)->get();
@@ -190,6 +220,7 @@ class HomeController extends Controller
         return view('products', compact('products'));
 
     }
+
 
     public function createPayment()
     {
@@ -240,6 +271,8 @@ class HomeController extends Controller
         }
     
     }
+
+
     //
     public function myOrders() {
 
@@ -258,6 +291,7 @@ class HomeController extends Controller
             return $data;
         }
     }
+
 
     public function paymentCard(Request $request)
     {
@@ -297,4 +331,60 @@ class HomeController extends Controller
             return response()->json(['error' => 'An error occurred while processing the payment.'], 500);
         }
     }
+
+
+    public function paymentCheckout(Request $request) {
+
+
+        $curl = curl_init();
+        
+        curl_setopt_array($curl, [
+          CURLOPT_PORT => "4430",
+          CURLOPT_URL => "https://securelink.valorpaytech.com:4430/?sale=",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => json_encode([
+            'appid' => 'oDOke0KU8UYkXOdVVwsvzwYvXYMMzvCd',
+            'appkey' => 'UQgQl7XG8FnWQcV5Ep1TWMLpAgSqjlhK',
+            'epi' => '2501103429',
+            'txn_type' => 'sale',
+            'amount' => 0.2,
+            'cardnumber' => $request->cardNumber,
+            'expirydate' => $request->expiryDate,
+            'cvv' => $request->cvv,
+            'cardholdername' => 'Michael Jordan',
+            'invoicenumber' => 'inv0001',
+            'orderdescription' => 'king size bed 10x12',
+            'surchargeAmount' => 10.2,
+            'surchargeIndicator' => 1,
+            'address1' => '2 Jericho Plz',
+            'city' => 'Jericho',
+            'state' => 'NY',
+            'shipping_country' => 'US',
+            'billing_country' => 'US',
+            'zip' => '50001',
+            'customer_email' => '0',
+            'customer_sms' => '1',
+            'merchant_email' => '0'
+          ]),
+          CURLOPT_HTTPHEADER => [
+            "accept: application/json",
+            "content-type: application/json"
+          ],
+        ]);
+        
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        
+        curl_close($curl);
+        
+        return response()->json(json_decode($response), 200);
+        
+    }
+
+    
 }

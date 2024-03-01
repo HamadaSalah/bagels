@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,4 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('payment-ckeckout', [HomeController::class, 'paymentCheckout'])->name('paymentCheckout');
+
 Route::post('/payment', [App\Http\Controllers\HomeController::class, 'paymentCard'])->name('payment');

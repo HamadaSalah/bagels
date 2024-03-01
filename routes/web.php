@@ -17,9 +17,112 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/ttt', function () {
+    $curl = curl_init();
+
+// curl_setopt_array($curl, [
+//   CURLOPT_PORT => "4430",
+//   CURLOPT_URL => "https://securelink-staging.valorpaytech.com:4430/?sale=",
+//   CURLOPT_RETURNTRANSFER => true,
+//   CURLOPT_ENCODING => "",
+//   CURLOPT_MAXREDIRS => 10,
+//   CURLOPT_TIMEOUT => 30,
+//   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//   CURLOPT_CUSTOMREQUEST => "POST",
+//   CURLOPT_POSTFIELDS => json_encode([
+//     'appid' => 'K718Whx3F662KHarLZsv1jVL6jnHJn16',
+//     'appkey' => 'hfXHJrhHYpE503sSLMQQQGe2IELb1Ae8',
+//     'epi' => '2501103429',
+//     'txn_type' => 'sale',
+//     'amount' => 5,
+//     'cardnumber' => '4111111111111111',
+//     'expirydate' => 1236,
+//     'cvv' => 999,
+//     'cardholdername' => 'Michael Jordan',
+//     'invoicenumber' => 'inv0001',
+//     'orderdescription' => 'king size bed 10x12',
+//     'surchargeAmount' => 10.2,
+//     'surchargeIndicator' => 1,
+//     'address1' => '2 Jericho Plz',
+//     'city' => 'Jericho',
+//     'state' => 'NY',
+//     'shipping_country' => 'US',
+//     'billing_country' => 'US',
+//     'zip' => '50001',
+//     'customer_email' => '0',
+//     'customer_sms' => '1',
+//     'merchant_email' => '0'
+//   ]),
+//   CURLOPT_HTTPHEADER => [
+//     "accept: application/json",
+//     "content-type: application/json"
+//   ],
+// ]);
+
+// $response = curl_exec($curl);
+// $err = curl_error($curl);
+
+// curl_close($curl);
+
+// if ($err) {
+//   echo "cURL Error #:" . $err;
+// } else {
+//     $eee = json_decode( $response);
+//   dd($eee->error_no);
+// }
+
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+  CURLOPT_PORT => "4430",
+  CURLOPT_URL => "https://securelink-staging.valorpaytech.com:4430/?sale=",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "POST",
+  CURLOPT_POSTFIELDS => json_encode([
+    'appid' => 'K718Whx3F662KHarLZsv1jVL6jnHJn16',
+    'appkey' => 'hfXHJrhHYpE503sSLMQQQGe2IELb1Ae8',
+    'epi' => '2501103429',
+    'txn_type' => 'sale',
+    'amount' => 5,
+    'cardnumber' => '4111111111111111',
+    'expirydate' => 1236,
+    'cvv' => 999,
+    'cardholdername' => 'Michael Jordan',
+    'invoicenumber' => 'inv0001',
+    'orderdescription' => 'king size bed 10x12',
+    'surchargeAmount' => 10.2,
+    'surchargeIndicator' => 1,
+    'address1' => '2 Jericho Plz',
+    'city' => 'Jericho',
+    'state' => 'NY',
+    'shipping_country' => 'US',
+    'billing_country' => 'US',
+    'zip' => '50001',
+    'customer_email' => '0',
+    'customer_sms' => '1',
+    'merchant_email' => '0'
+  ]),
+  CURLOPT_HTTPHEADER => [
+    "accept: application/json",
+    "content-type: application/json"
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+});
 
 Auth::routes();
 

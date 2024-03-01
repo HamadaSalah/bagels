@@ -121,139 +121,68 @@
                 <div class="form-group">
                     <input type="street" placeholder="Write Your street ..." value="{{auth()?->user()?->street}}" name="street" class="form-control mb-3" required>
                 </div> --}}
-                <form id="payment-form" >@csrf
-                  <input type="hidden" class="form-control" name="amount" id="price-input"
-                      style="width: 100%; height: 40px; border: 2px solid #ccc; border-radius: 4px; padding: 8px;"
-                      value="{{ session('price', '') }}">
-                  <div id="card-container"></div>
-                  <div id="errorBody" style="color: red;margin: 3px"></div>
-                  <button class="cardBtn btn btn-success" id="card-button" type="button">Pay Now</button>
+                <input type="hidden" class="form-control" name="amount" id="price-input"
+                    style="width: 100%; height: 40px; border: 2px solid #ccc; border-radius: 4px; padding: 8px;"
+                    value="{{ session('price', '') }}">
               </form>
-              <div id="payment-status-container"></div> 
+
+              <div class="checkout-form">
+                <div class="form-group">
+                    <label for="cardNumber">Card Number</label><br/>
+                    <input class="form-control" type="number" value="" id="cardNumber" minlength="0" maxlength="16" required oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                </div><br/>
+                <div class="form-group">
+                    <label for="expDate">Expiration Date</label><br/>
+                    <input class="form-control" type="number" id="expDate"  minlength="0" maxlength="4" required oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                </div><br/>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input class="form-control" type="number" id="cvv"  minlength="0" maxlength="3" required oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                </div><br/>
+                <div class=""><center style="color: red" id="infoo"></center></div>
+                <button type="submit" class="btn btn-success" id="submitBtn22">Submit</button>
+            </div>
+            
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
               <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-              <script src="https://web.squarecdn.com/v1/square.js"></script>
-              <script src="https://cdn.jsdelivr.net/npm/card-validator/dist/card-validator.min.js"></script>
               
               <script>
-                  const appId = 'sq0idp--mmVbmLxuiLZFcTwb-F2YA';
-                  const locationId = 'LYQ78M8HRC23X';
-              
-                  async function initializeCard(payments) {
-                      const card = await payments.card();
-                      await card.attach('#card-container');
-              
-                      return card;
-                  }
-              
-                  async function createPayment(token, amount) {
-                      const body = JSON.stringify({
-                          locationId,
-                          sourceId: token,
-                          amount: 50,
-                      });
-              
-                      const paymentResponse = await fetch('/api/payment', {
-                          method: 'POST',
-                          headers: {
-                              'Content-Type': 'application/json',
+                $(document).ready(function() {
+                  $('#submitBtn22').click(function(e) {
+                      e.preventDefault();
+                      
+                      var cardNumber = $('#cardNumber').val();
+                      var expDate = $('#expDate').val();
+                      var cvv = $('#cvv').val();
+
+                      let route = "{{ route('paymentCheckout') }}";
+                      let token = "{{ csrf_token()}}";
+                      $("#infoo").html("");
+
+                      $.ajax({
+                          url: route,
+                          type: 'POST',
+                          data: {
+                              _token:token,
+                              cardNumber:cardNumber,
+                              expDate:expDate,
+                              cvv:cvv
                           },
-                          body,
-                      });
-              
-                      if (paymentResponse.ok) {
-                        console.log(paymentResponse.ok);
-                        document.getElementById("MYFFORMM").submit();
-                          
-                      }
-                      else {
-                        const errorBody = await paymentResponse.text();
+                          success: function(response) {
 
-                        document.getElementById("errorBody").innerHTML = "Failed When Transaction or invalid data!";
-
-                      }
-              
-
-                  }
-              
-                  async function tokenize(paymentMethod) {
-                      const tokenResult = await paymentMethod.tokenize();
-                      if (tokenResult.status === 'OK') {
-                          return tokenResult.token;
-                      } else {
-                          console.log(tokenResult.errors);
-                          // throw new Error(errorMessage);
-                      }
-                  }
-              
-                  function displayPaymentResults(status) {
-                      const statusContainer = document.getElementById('payment-status-container');
-                      if (status === 'SUCCESS') {
-                          statusContainer.classList.remove('is-failure');
-                          statusContainer.classList.add('is-success');
-                      } else {
-                          statusContainer.classList.remove('is-success');
-                          statusContainer.classList.add('is-failure');
-                      }
-              
-                      statusContainer.style.visibility = 'visible';
-                  }
-              
-                  document.addEventListener('DOMContentLoaded', async function () {
-                      if (!window.Square) {
-                          throw new Error('Square.js failed to load properly');
-                      }
-              
-                      let payments;
-                      try {
-                          payments = window.Square.payments(appId, locationId);
-                      } catch {
-                          const statusContainer = document.getElementById('payment-status-container');
-                          statusContainer.className = 'missing-credentials';
-                          statusContainer.style.visibility = 'visible';
-                          return;
-                      }
-              
-                      let card;
-                      try {
-                          card = await initializeCard(payments);
-                      } catch (e) {
-                          console.error('Initializing Card failed', e);
-                          return;
-                      }
-              
-                      async function handlePaymentMethodSubmission(event, paymentMethod) {
-                          event.preventDefault();
-              
-                          try {
-                              const cardNonce = await paymentMethod.tokenize();
-                              if (cardNonce) {
-                                  cardButton.disabled = true;
-              
-                                  const amountValue = 50;
-                                  if (isNaN(amountValue) || amountValue <= 0) {
-                                      throw new Error('Invalid or missing amount.');
-                                  }
-              
-                                  const paymentResults = await createPayment(cardNonce, amountValue);
-              
-                                  displayPaymentResults('SUCCESS');
-                                  console.debug('Payment Success', paymentResults);
-                              } else {
-                                  displayPaymentResults('FAILURE');
-                                  console.error('Invalid card nonce');
+                              if(response.success_url != false) {
+                                $('#MYFFORMM').submit();
                               }
-                          } catch (e) {
-                              cardButton.disabled = false;
-                              displayPaymentResults('FAILURE');
-                              console.error(e.message);
-                          }
-                      }
-              
-                      const cardButton = document.getElementById('card-button');
-                      cardButton.addEventListener('click', async function (event) {
-                          await handlePaymentMethodSubmission(event, card);
-                      });
+                              else {
+                                $("#infoo").html(response.mesg);
+                              }
+
+                          },
+                          error: function(xhr) {
+                          }});
+
                   });
+                });
               
               </script>
               
